@@ -54,3 +54,39 @@ header {
   overflow-y: auto;
   z-index: 3;
 }
+const banner = document.getElementById('alert-banner');
+const logList = document.getElementById('storm-log');
+const logData = [];
+
+const areas = ['MO', 'KS'];
+
+Promise.all(
+  areas.map(area =>
+    fetch(`https://api.weather.gov/alerts/active?area=${area}`).then(res => res.json())
+  )
+).then(results => {
+  results.flatMap(r => r.features).forEach(alert => {
+    const event = alert.properties.event;
+    const desc = alert.properties.headline;
+    const timestamp = new Date(alert.properties.sent).toLocaleString();
+    const state = alert.properties.areaDesc;
+
+    // Show alert (latest only)
+    banner.style.display = 'block';
+    banner.textContent = `${event} (${state}): ${desc}`;
+
+    // Add to log
+    const li = document.createElement('li');
+    li.textContent = `${timestamp} – ${event} – ${state}`;
+    logList.appendChild(li);
+
+    logData.push({ timestamp, event, state });
+  });
+
+  // Optional: Save to localStorage (or expand to backend)
+  localStorage.setItem('stormLog', JSON.stringify(logData));
+}).catch(err => {
+  console.error('Alert fetch failed:', err);
+  banner.style.display = 'block';
+  banner.textContent = '⚠️ Failed to load alerts';
+});
