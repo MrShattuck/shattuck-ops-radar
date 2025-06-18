@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Live weather radar for Kansas City, KS & MO with real-time updates powered by Windy.com.">
+  <title>Shattuck Ops – Kansas City Live Radar</title>
+  <link rel="stylesheet" href="style.css">
+  <script defer src="alerts.js"></script>
+</head>
+<body>
+  <header>
+    SHATTUCK OPS – KANSAS CITY LIVE RADAR
+  </header>
+  <div id="radar-container">
+    <iframe
+      src="https://embed.windy.com/embed2.html?lat=39.1&lon=-94.6&zoom=7&level=surface&overlay=radar&menu=&message=true&marker=&calendar=now&pressure=&type=map&location=coordinates&detail=&detailLat=39.1&detailLon=-94.6&metricWind=mph&metricTemp=%C2%B0F"
+      frameborder="0"
+      width="100%"
+      height="100%"
+      allowfullscreen>
+    </iframe>
+  </div>
+  <div id="alert-banner"></div>
+  <div id="storm-log-container">
+    <h2>Storm Log</h2>
+    <ul id="storm-log"></ul>
+  </div>
+</body>
+</html>
